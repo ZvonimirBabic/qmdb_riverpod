@@ -1,11 +1,15 @@
 import 'dart:io';
 
-import 'package:get/get.dart' hide FormData, Response;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:qmdb/design/constants/app_constants.dart';
 import 'package:qmdb/models/movies/movie_basic/movie_basic.dart';
 
-class HiveService extends GetxService {
+final hiveServiceProvider = Provider<HiveService>((ref) {
+  return HiveService();
+});
+
+class HiveService {
   ///
   /// VARIABLES
   ///
@@ -16,11 +20,6 @@ class HiveService extends GetxService {
   ///
   /// INIT
   ///
-
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-  }
 
   Future<void> initHiveCustom() async {
     await Hive.initFlutter();

@@ -5,13 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:get/get.dart' hide FormData, Response;
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qmdb/design/constants/app_constants.dart';
 import 'package:qmdb/utils/util_constants/qmdb_urls.dart';
-
-import 'logger_service.dart';
 
 enum HttpMethod {
   get,
@@ -21,18 +20,19 @@ enum HttpMethod {
   delete,
 }
 
-class DioService extends GetxService {
+final dioServiceProvider = Provider<DioService>((ref) => DioService());
+
+class DioService {
   ///
   /// DEPENDENCIES
   ///
-
-  final logger = Get.find<LoggerService>();
 
   ///
   /// VARIABLES
   ///
 
   late final Dio dio;
+  late final Logger logger;
   late final Alice alice;
   late CacheStore cacheStore;
 
@@ -41,7 +41,9 @@ class DioService extends GetxService {
   ///
 
   Future<DioService> init() async {
-    alice = Alice(showNotification: true, navigatorKey: Get.key);
+    alice = Alice(
+      showNotification: true,
+    );
     var cacheDir = await getTemporaryDirectory();
     var cacheStore = HiveCacheStore(
       cacheDir.path,
@@ -160,7 +162,8 @@ class AuthInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     /// Get token from storage!!!!!
     options.headers.addAll({
-      "Authorization": "YOUR-API-KEY-HERE",
+      "Authorization":
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiOGQ3Zjc2OTQ3OTA0YTAxMTI4NmRjNzMyYzU1MjM0ZSIsInN1YiI6IjYwMzM3ODBiMTEzODZjMDAzZjk0ZmM2YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XYuIrLxvowrkevwKx-KhOiOGZ2Tn-R8tEksXq842kX4",
     });
     super.onRequest(options, handler);
   }

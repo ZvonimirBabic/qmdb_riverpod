@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:get/get.dart' hide FormData, Response;
 import 'package:qmdb/services/dio_service.dart';
 import 'package:qmdb/utils/util_constants/qmdb_urls.dart';
 
-class ApiService extends GetxService {
-  final DioService dioService = Get.find();
+class ApiService {
+  final DioService dioService;
+
+  ApiService({required this.dioService});
 
   ///
   /// METHODS

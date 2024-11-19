@@ -1,30 +1,13 @@
-import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ConnectivityService extends GetxService {
-  final Rx<bool> isConnected = true.obs;
-  late StreamSubscription<List<ConnectivityResult>> _streamSubscription;
-
-  @override
-  void onInit() {
-    super.onInit();
-    _streamSubscription = Connectivity()
-        .onConnectivityChanged
-        .listen((List<ConnectivityResult> result) {
-      if (result.contains(ConnectivityResult.ethernet) ||
-          result.contains(ConnectivityResult.wifi) ||
-          result.contains(ConnectivityResult.mobile)) {
-        isConnected.value = true;
-      } else {
-        isConnected.value = false;
-      }
-    });
-  }
-
-  @override
-  void onClose() {
-    _streamSubscription.cancel();
-  }
-}
+final connectivityProvider = StreamProvider<bool>((ref) {
+  return Connectivity()
+      .onConnectivityChanged
+      .map((List<ConnectivityResult> connectivityResult) {
+    // Determine connectivity status
+    return connectivityResult.contains(ConnectivityResult.ethernet) ||
+        connectivityResult.contains(ConnectivityResult.wifi) ||
+        connectivityResult.contains(ConnectivityResult.mobile);
+  });
+});

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:qmdb/shared_widgets/movies/genres_row.dart';
 import 'package:qmdb/shared_widgets/text/headline.dart';
 
-import '../../design/constants/assets.dart';
 import '../../models/movies/genres/genre.dart';
 import '../../models/movies/movie_basic/movie_basic.dart';
-import '../../pages.dart';
 import '../../utils/kTransparentImage.dart';
 import 'movie_rating_widget.dart';
 
@@ -33,8 +29,9 @@ class MoviesListItem extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
+          /*
           Get.toNamed(QMDBRoutes.movieDetailsScreen,
-              arguments: [movie.id, isFavorite]);
+              arguments: [movie.id, isFavorite]);*/
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -82,12 +79,8 @@ class MoviesListItem extends StatelessWidget {
                       GestureDetector(
                         onTap: addToFavorites,
                         child: isFavorite
-                            ? SvgPicture.asset(
-                                QMDBAssets.favouritesIconCheckedFillSVG,
-                                semanticsLabel: 'Favorite icon')
-                            : SvgPicture.asset(
-                                QMDBAssets.favouritesIconUncheckedSVG,
-                                semanticsLabel: 'Not favorite icon'),
+                            ? Icon(Icons.favorite)
+                            : Icon(Icons.favorite_border_outlined),
                       ),
                     ],
                   ),
