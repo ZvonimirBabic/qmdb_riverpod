@@ -19,7 +19,9 @@ class MoviesPopularScreen extends StatelessWidget {
             ),
             Expanded(
                 child: Placeholder(
-              child: Center(child: Text('popular movies list')),
+              child: Center(
+                child: Text('Popular'),
+              ),
             ))
           ],
         ),

@@ -19,7 +19,9 @@ class MoviesFavouritesScreen extends StatelessWidget {
             ),
             Expanded(
                 child: Placeholder(
-              child: Center(child: Text('TODO')),
+              child: Center(
+                child: Text('Favourites'),
+              ),
             )),
           ],
         ),
