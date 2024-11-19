@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:qmdb/services/connectivity_service.dart';
+
+import '../../design/constants/assets.dart';
 
 class QMDBAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const QMDBAppBar({super.key, this.leading, this.title});
@@ -21,10 +24,8 @@ class QMDBAppBar extends ConsumerWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(left: 17.0),
         child: leading ??
             FittedBox(
-              child: Icon(
-                Icons.qr_code,
-                color: Colors.white,
-              ),
+              child: SvgPicture.asset(QMDBAssets.qAgencyLogoSVG,
+                  semanticsLabel: 'Q agency logo'),
             ),
       ),
       title: Text(
