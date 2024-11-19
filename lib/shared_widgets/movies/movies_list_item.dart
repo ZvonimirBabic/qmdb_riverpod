@@ -29,9 +29,7 @@ class MoviesListItem extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          /*
-          Get.toNamed(QMDBRoutes.movieDetailsScreen,
-              arguments: [movie.id, isFavorite]);*/
+          ///TODO
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,
