@@ -20,7 +20,7 @@ enum HttpMethod {
   delete,
 }
 
-final dioServiceProvider = Provider<DioService>((ref) => DioService());
+final dioServiceProvider = Provider<DioService>((ref) => DioService(),);
 
 class DioService {
   ///

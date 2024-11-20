@@ -1,7 +1,12 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+
+final loggerServiceProvider = Provider<LoggerService>((ref) {
+  return LoggerService();
+});
 
 class LoggerService {
   ///

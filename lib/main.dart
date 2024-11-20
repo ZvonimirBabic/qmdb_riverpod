@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qmdb/pages.dart';
 import 'package:qmdb/services/dio_service.dart';
+import 'package:qmdb/services/hive_service.dart';
 
 import 'design/theme/app_theme.dart';
 
@@ -10,6 +11,7 @@ final appStartupProvider = FutureProvider(
   name: 'appStartupProvider',
   (ref) async {
     await ref.watch(dioServiceProvider).init();
+    await ref.watch(hiveServiceProvider).initHiveCustom();
   },
 );
 

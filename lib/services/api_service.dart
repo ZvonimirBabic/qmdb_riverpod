@@ -1,7 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:qmdb/services/dio_service.dart';
 import 'package:qmdb/utils/util_constants/qmdb_urls.dart';
+
+final apiServiceProvider = Provider<ApiService>((ref) {
+  return ApiService(dioService: ref.watch(dioServiceProvider));
+});
 
 class ApiService {
   final DioService dioService;
