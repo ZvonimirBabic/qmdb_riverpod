@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qmdb/services/dio_service.dart';
-import 'package:qmdb/views/home/home_screen.dart';
-import 'package:qmdb/views/movie_details/movie_details_screen.dart';
+
+import '../views/home/home_screen.dart';
+import '../views/movie_details/movie_details_screen.dart';
+import 'alice_provider.dart';
 
 final goRouterProvider = Provider<GoRouter>(
   (ref) {
     return GoRouter(
       errorBuilder: (context, state) => Text('errorBuilder'),
-      navigatorKey: ref.read(dioServiceProvider).alice.getNavigatorKey(),
+      navigatorKey: ref.watch(aliceProvider).getNavigatorKey(),
       routes: [
         GoRoute(
           path: QMDBRoutes.homeScreen,

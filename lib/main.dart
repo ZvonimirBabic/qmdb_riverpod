@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qmdb/pages.dart';
-import 'package:qmdb/services/dio_service.dart';
+import 'package:qmdb/services/dio_provider.dart';
+import 'package:qmdb/services/go_router_provider.dart';
 import 'package:qmdb/services/hive_service.dart';
 
 import 'design/theme/app_theme.dart';
@@ -10,13 +11,15 @@ import 'design/theme/app_theme.dart';
 final appStartupProvider = FutureProvider(
   name: 'appStartupProvider',
   (ref) async {
-    await ref.watch(dioServiceProvider).init();
-    await ref.watch(hiveServiceProvider).initHiveCustom();
+    /// Kad stavim ref.watch onda se inicijalizira dvaput i baci late already initialized
+    await ref.read(dioCacheInterceptorProvider);
+    await ref.read(hiveServiceProvider).initHive();
   },
 );
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   runApp(
     ProviderScope(
@@ -34,12 +37,20 @@ class QMDBApp extends ConsumerWidget {
     final GoRouter goRouter = ref.watch(goRouterProvider);
     return appStartupState.when(
       loading: () => const SizedBox(),
-      error: (error, stackTrace) => MaterialApp(
-        home: Scaffold(
-          body: Center(child: Text(error.toString())),
-        ),
-      ),
+      error: (error, stackTrace) {
+        FlutterNativeSplash.remove();
+        return MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Text(
+                error.toString(),
+              ),
+            ),
+          ),
+        );
+      },
       data: (_) {
+        FlutterNativeSplash.remove();
         return MaterialApp.router(
           title: 'appName',
           theme: QMDBThemeLight,
@@ -56,3 +67,8 @@ class QMDBApp extends ConsumerWidget {
     );
   }
 }
+
+/// TODO
+/// convert dio service to only provide dio without extra methods
+/// create an api client that uses dio and generate with retrofit
+///

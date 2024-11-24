@@ -6,33 +6,26 @@ import 'package:qmdb/design/constants/app_constants.dart';
 import 'package:qmdb/models/movies/movie_basic/movie_basic.dart';
 
 final hiveServiceProvider = Provider<HiveService>((ref) {
-  return HiveService();
+  return HiveServiceImpl();
 });
 
-class HiveService {
-  ///
-  /// VARIABLES
-  ///
+abstract class HiveService {
+  Future<void> initHive();
+  List<MovieBasic> getFavoriteMoviesFromLocalStorage();
+  Future<void> saveFavoriteMovieToLocalStorage(MovieBasic movie);
+  Future<void> deleteFavoriteMovieToLocalStorage(MovieBasic movie);
+}
 
+class HiveServiceImpl implements HiveService {
   late final Box<MovieBasic> _hiveFavoriteMoviesBox;
   late final Directory cacheDir;
 
-  ///
-  /// INIT
-  ///
-
-  Future<void> initHiveCustom() async {
+  Future<void> initHive() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(
-      MovieBasicAdapter(),
-    );
+    Hive.registerAdapter(MovieBasicAdapter(), override: true);
     _hiveFavoriteMoviesBox =
         await Hive.openBox(QMDBAppConstants.hiveFavouritesBox);
   }
-
-  ///
-  /// METHODS
-  ///
 
   List<MovieBasic> getFavoriteMoviesFromLocalStorage() {
     return _hiveFavoriteMoviesBox.values.toList();

@@ -13,12 +13,10 @@ class MoviesListItem extends StatelessWidget {
     required this.movie,
     this.addToFavorites,
     this.isFavorite = false,
-    this.genres = const <Genre>[],
   });
 
   final MovieBasic movie;
   final VoidCallback? addToFavorites;
-  final List<Genre> genres;
 
   final bool isFavorite;
 
@@ -92,7 +90,9 @@ class MoviesListItem extends StatelessWidget {
                     height: 12,
                   ),
                   GenresRow(
-                    genres: genres,
+                    genres: List.generate(movie.genreIds.length, (index) {
+                      return Genre(id: 0, name: 'TODO');
+                    }),
                   ),
                 ],
               ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:qmdb/services/connectivity_service.dart';
 
 import '../../design/constants/assets.dart';
+import '../../services/connectivityProvider.dart';
 
 class QMDBAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const QMDBAppBar({super.key, this.leading, this.title});
