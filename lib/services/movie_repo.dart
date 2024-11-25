@@ -12,7 +12,7 @@ final movieRepositoryProvider = Provider<MovieRepository>((ref) {
 
 abstract interface class MovieRepository {
   EitherFailureOr<List<MovieBasic>> getMovies(int page);
-  EitherFailureOr<List<Genre>> getGenres(int page);
+  EitherFailureOr<List<Genre>> getGenres();
 }
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -21,7 +21,7 @@ class MovieRepositoryImpl implements MovieRepository {
   final ApiClient apiClient;
 
   @override
-  EitherFailureOr<List<Genre>> getGenres(int page) async {
+  EitherFailureOr<List<Genre>> getGenres() async {
     try {
       final response = await apiClient.getGenres();
       return Right(response);

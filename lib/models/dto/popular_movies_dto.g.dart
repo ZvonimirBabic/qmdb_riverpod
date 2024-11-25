@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movies_response.dart';
+part of 'popular_movies_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MoviesResponseAdapter extends TypeAdapter<MoviesResponse> {
+class PopularMoviesDTOAdapter extends TypeAdapter<PopularMoviesDTO> {
   @override
   final int typeId = 1;
 
   @override
-  MoviesResponse read(BinaryReader reader) {
+  PopularMoviesDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MoviesResponse(
+    return PopularMoviesDTO(
       page: fields[1] as int,
       moviesBasicList: (fields[3] as List).cast<MovieBasic>(),
       totalPages: fields[5] as int,
@@ -25,7 +25,7 @@ class MoviesResponseAdapter extends TypeAdapter<MoviesResponse> {
   }
 
   @override
-  void write(BinaryWriter writer, MoviesResponse obj) {
+  void write(BinaryWriter writer, PopularMoviesDTO obj) {
     writer
       ..writeByte(4)
       ..writeByte(1)
@@ -44,7 +44,7 @@ class MoviesResponseAdapter extends TypeAdapter<MoviesResponse> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MoviesResponseAdapter &&
+      other is PopularMoviesDTOAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -53,8 +53,8 @@ class MoviesResponseAdapter extends TypeAdapter<MoviesResponse> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-MoviesResponse _$MoviesResponseFromJson(Map<String, dynamic> json) =>
-    MoviesResponse(
+PopularMoviesDTO _$PopularMoviesDTOFromJson(Map<String, dynamic> json) =>
+    PopularMoviesDTO(
       page: (json['page'] as num).toInt(),
       moviesBasicList: (json['results'] as List<dynamic>)
           .map((e) => MovieBasic.fromJson(e as Map<String, dynamic>))
@@ -63,7 +63,7 @@ MoviesResponse _$MoviesResponseFromJson(Map<String, dynamic> json) =>
       totalResults: (json['total_results'] as num).toInt(),
     );
 
-Map<String, dynamic> _$MoviesResponseToJson(MoviesResponse instance) =>
+Map<String, dynamic> _$PopularMoviesDTOToJson(PopularMoviesDTO instance) =>
     <String, dynamic>{
       'page': instance.page,
       'results': instance.moviesBasicList,

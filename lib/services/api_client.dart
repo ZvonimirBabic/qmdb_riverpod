@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qmdb/models/movies/movies_response.dart';
+import 'package:qmdb/models/dto/popular_movies_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../models/movies/genres/genre.dart';
@@ -21,7 +21,7 @@ abstract class ApiClient {
   factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient;
 
   @GET('/movie/popular')
-  Future<MoviesResponse> getPopular(
+  Future<PopularMoviesDTO> getPopular(
     @Query('page') int page,
   );
 

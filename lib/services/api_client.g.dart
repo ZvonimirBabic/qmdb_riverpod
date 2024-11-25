@@ -24,12 +24,12 @@ class _ApiClient implements ApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<MoviesResponse> getPopular(int page) async {
+  Future<PopularMoviesDTO> getPopular(int page) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<MoviesResponse>(Options(
+    final _options = _setStreamType<PopularMoviesDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -46,9 +46,9 @@ class _ApiClient implements ApiClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late MoviesResponse _value;
+    late PopularMoviesDTO _value;
     try {
-      _value = MoviesResponse.fromJson(_result.data!);
+      _value = PopularMoviesDTO.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

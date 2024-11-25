@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:q_architecture/src/domain/notifiers/base_state.dart';
@@ -12,6 +14,7 @@ class MoviesPopularScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(popularMoviesNotifierProvider);
+    log('state in view $state');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -25,13 +28,14 @@ class MoviesPopularScreen extends ConsumerWidget {
             height: 20,
           ),
           Expanded(
+              child: Center(
             child: switch (state) {
-              BaseInitial<List<MovieBasic>>() => throw UnimplementedError(),
-              BaseLoading<List<MovieBasic>>() => throw UnimplementedError(),
-              BaseError<List<MovieBasic>>() => throw UnimplementedError(),
-              BaseData<List<MovieBasic>>() => throw UnimplementedError(),
+              BaseInitial<List<MovieBasic>>() => CircularProgressIndicator(),
+              BaseLoading<List<MovieBasic>>() => CircularProgressIndicator(),
+              BaseError<List<MovieBasic>>() => Text(state.failure.title),
+              BaseData<List<MovieBasic>>() => Text('data'),
             },
-          ),
+          )),
         ],
       ),
     );
