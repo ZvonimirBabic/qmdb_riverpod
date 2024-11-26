@@ -57,12 +57,12 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<List<Genre>> getGenres() async {
+  Future<GenresResponse> getGenres() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<Genre>>(Options(
+    final _options = _setStreamType<GenresResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -78,12 +78,10 @@ class _ApiClient implements ApiClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<Genre> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GenresResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => Genre.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = GenresResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

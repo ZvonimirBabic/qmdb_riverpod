@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:q_architecture/base_notifier.dart';
 import 'package:qmdb/shared_widgets/text/headline.dart';
 
-import '../../models/movies/movie_basic/movie_basic.dart';
+import '../../models/movies/movie_basic_mapped.dart';
 import '../../services/popular_movies_notifier.dart';
 
 class MoviesFavouritesScreen extends ConsumerWidget {
@@ -26,10 +26,12 @@ class MoviesFavouritesScreen extends ConsumerWidget {
           ),
           Expanded(
             child: switch (state) {
-              BaseInitial<List<MovieBasic>>() => throw UnimplementedError(),
-              BaseLoading<List<MovieBasic>>() => throw UnimplementedError(),
-              BaseError<List<MovieBasic>>() => throw UnimplementedError(),
-              BaseData<List<MovieBasic>>() => throw UnimplementedError(),
+              BaseInitial<List<MovieBasicMapped>>() =>
+                throw UnimplementedError(),
+              BaseLoading<List<MovieBasicMapped>>() =>
+                throw UnimplementedError(),
+              BaseError<List<MovieBasicMapped>>() => throw UnimplementedError(),
+              BaseData<List<MovieBasicMapped>>() => throw UnimplementedError(),
             },
           ),
         ],

@@ -3,7 +3,7 @@ import 'package:qmdb/shared_widgets/movies/genres_row.dart';
 import 'package:qmdb/shared_widgets/text/headline.dart';
 
 import '../../models/movies/genres/genre.dart';
-import '../../models/movies/movie_basic/movie_basic.dart';
+import '../../models/movies/movie_basic_mapped.dart';
 import '../../utils/kTransparentImage.dart';
 import 'movie_rating_widget.dart';
 
@@ -15,7 +15,7 @@ class MoviesListItem extends StatelessWidget {
     this.isFavorite = false,
   });
 
-  final MovieBasic movie;
+  final MovieBasicMapped movie;
   final VoidCallback? addToFavorites;
 
   final bool isFavorite;
@@ -90,8 +90,10 @@ class MoviesListItem extends StatelessWidget {
                     height: 12,
                   ),
                   GenresRow(
-                    genres: List.generate(movie.genreIds.length, (index) {
-                      return Genre(id: 0, name: 'TODO');
+                    genres: List.generate(movie.genres.length, (index) {
+                      return Genre(
+                          id: movie.genres[index].id,
+                          name: movie.genres[index].name);
                     }),
                   ),
                 ],

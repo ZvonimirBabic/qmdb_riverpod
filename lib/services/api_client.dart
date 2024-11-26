@@ -26,5 +26,5 @@ abstract class ApiClient {
   );
 
   @GET('genre/movie/list')
-  Future<List<Genre>> getGenres();
+  Future<GenresResponse> getGenres();
 }
