@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie_basic.dart';
+part of 'popular_movie_dto.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MovieBasicAdapter extends TypeAdapter<MovieBasic> {
+class PopularMovieDTOAdapter extends TypeAdapter<PopularMovieDTO> {
   @override
   final int typeId = 2;
 
   @override
-  MovieBasic read(BinaryReader reader) {
+  PopularMovieDTO read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MovieBasic(
+    return PopularMovieDTO(
       genreIds: (fields[0] as List).cast<int>(),
       id: fields[1] as int,
       posterPath: fields[2] as String,
@@ -26,7 +26,7 @@ class MovieBasicAdapter extends TypeAdapter<MovieBasic> {
   }
 
   @override
-  void write(BinaryWriter writer, MovieBasic obj) {
+  void write(BinaryWriter writer, PopularMovieDTO obj) {
     writer
       ..writeByte(5)
       ..writeByte(0)
@@ -47,7 +47,7 @@ class MovieBasicAdapter extends TypeAdapter<MovieBasic> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MovieBasicAdapter &&
+      other is PopularMovieDTOAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -56,7 +56,8 @@ class MovieBasicAdapter extends TypeAdapter<MovieBasic> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-MovieBasic _$MovieBasicFromJson(Map<String, dynamic> json) => MovieBasic(
+PopularMovieDTO _$PopularMovieDTOFromJson(Map<String, dynamic> json) =>
+    PopularMovieDTO(
       genreIds: (json['genre_ids'] as List<dynamic>)
           .map((e) => (e as num).toInt())
           .toList(),
@@ -66,7 +67,7 @@ MovieBasic _$MovieBasicFromJson(Map<String, dynamic> json) => MovieBasic(
       voteAverage: (json['vote_average'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$MovieBasicToJson(MovieBasic instance) =>
+Map<String, dynamic> _$PopularMovieDTOToJson(PopularMovieDTO instance) =>
     <String, dynamic>{
       'genre_ids': instance.genreIds,
       'id': instance.id,

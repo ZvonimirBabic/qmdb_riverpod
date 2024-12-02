@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../data/api/alice_provider.dart';
+import '../domain/models/movie/movie.dart';
 import '../views/home/home_screen.dart';
 import '../views/movie_details/movie_details_screen.dart';
-import 'alice_provider.dart';
 
 final goRouterProvider = Provider<GoRouter>(
   (ref) {
@@ -17,8 +18,14 @@ final goRouterProvider = Provider<GoRouter>(
           builder: (context, state) => HomeScreen(),
         ),
         GoRoute(
+          name: QMDBRoutes.movieDetailsScreen,
           path: QMDBRoutes.movieDetailsScreen,
-          builder: (context, state) => MovieDetailsScreen(),
+          builder: (context, state) {
+            final Movie movie = state.extra as Movie;
+            return MovieDetailsScreen(
+              movie: movie,
+            );
+          },
         ),
       ],
     );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qmdb/services/dio_provider.dart';
+import 'package:qmdb/data/api/dio_provider.dart';
 import 'package:qmdb/services/go_router_provider.dart';
 import 'package:qmdb/services/hive_service.dart';
 

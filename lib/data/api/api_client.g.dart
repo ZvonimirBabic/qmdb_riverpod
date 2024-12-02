@@ -57,12 +57,12 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<GenresResponse> getGenres() async {
+  Future<GenresDTO> getGenres() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<GenresResponse>(Options(
+    final _options = _setStreamType<GenresDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -79,9 +79,9 @@ class _ApiClient implements ApiClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late GenresResponse _value;
+    late GenresDTO _value;
     try {
-      _value = GenresResponse.fromJson(_result.data!);
+      _value = GenresDTO.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

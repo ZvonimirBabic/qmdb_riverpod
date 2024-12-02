@@ -18,7 +18,7 @@ class PopularMoviesDTOAdapter extends TypeAdapter<PopularMoviesDTO> {
     };
     return PopularMoviesDTO(
       page: fields[1] as int,
-      moviesBasicList: (fields[3] as List).cast<MovieBasic>(),
+      results: (fields[3] as List).cast<PopularMovieDTO>(),
       totalPages: fields[5] as int,
       totalResults: fields[7] as int,
     );
@@ -31,7 +31,7 @@ class PopularMoviesDTOAdapter extends TypeAdapter<PopularMoviesDTO> {
       ..writeByte(1)
       ..write(obj.page)
       ..writeByte(3)
-      ..write(obj.moviesBasicList)
+      ..write(obj.results)
       ..writeByte(5)
       ..write(obj.totalPages)
       ..writeByte(7)
@@ -56,8 +56,8 @@ class PopularMoviesDTOAdapter extends TypeAdapter<PopularMoviesDTO> {
 PopularMoviesDTO _$PopularMoviesDTOFromJson(Map<String, dynamic> json) =>
     PopularMoviesDTO(
       page: (json['page'] as num).toInt(),
-      moviesBasicList: (json['results'] as List<dynamic>)
-          .map((e) => MovieBasic.fromJson(e as Map<String, dynamic>))
+      results: (json['results'] as List<dynamic>)
+          .map((e) => PopularMovieDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
       totalPages: (json['total_pages'] as num).toInt(),
       totalResults: (json['total_results'] as num).toInt(),
@@ -66,7 +66,7 @@ PopularMoviesDTO _$PopularMoviesDTOFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PopularMoviesDTOToJson(PopularMoviesDTO instance) =>
     <String, dynamic>{
       'page': instance.page,
-      'results': instance.moviesBasicList,
+      'results': instance.results,
       'total_pages': instance.totalPages,
       'total_results': instance.totalResults,
     };

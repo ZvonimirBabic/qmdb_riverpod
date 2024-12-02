@@ -2,26 +2,25 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:q_architecture/base_notifier.dart';
 import 'package:q_architecture/q_architecture.dart';
-import 'package:qmdb/models/movies/genres/genre.dart';
-import 'package:qmdb/services/genres_provider.dart';
-import 'package:qmdb/services/movie_repo.dart';
+import 'package:qmdb/domain/mappers/movie_mapper.dart';
 
-import '../models/movies/movie_basic/movie_basic.dart';
-import '../models/movies/movie_basic_mapped.dart';
+import '../data/dto/popular_movie_dto/popular_movie_dto.dart';
+import '../domain/models/movie/movie.dart';
+import '../domain/movie_repository/movie_repository.dart';
 
 final popularMoviesNotifierProvider =
-    NotifierProvider<PopularMoviesNotifier, BaseState<List<MovieBasicMapped>>>(
+    NotifierProvider<PopularMoviesNotifier, BaseState<List<Movie>>>(
   () => PopularMoviesNotifier(),
 );
 
-class PopularMoviesNotifier extends BaseNotifier<List<MovieBasicMapped>> {
+class PopularMoviesNotifier extends BaseNotifier<List<Movie>> {
   @override
   void prepareForBuild() {
     fetchMoviesAndParseEntities();
   }
 
   Future<void> fetchMoviesAndParseEntities() async {
-    final Either<Failure, List<MovieBasic>> temp =
+    final Either<Failure, List<PopularMovieDTO>> temp =
         await ref.watch(movieRepositoryProvider).getMovies(1);
     final parsed = temp.fold((fail) {
       state = BaseState.error(
@@ -31,26 +30,10 @@ class PopularMoviesNotifier extends BaseNotifier<List<MovieBasicMapped>> {
       state = BaseState.data(result
           .map(
             (a) => ref.read(
-              movieBasicMapperProvider(a),
+              popularMovieDTOMapper(a),
             ),
           )
           .toList(growable: true));
     });
   }
 }
-
-final movieBasicMapperProvider =
-    Provider.family<MovieBasicMapped, MovieBasic>((ref, movieBasic) {
-  final genres = ref.watch(genresStateProvider);
-
-  Genre findGenre(int id) {
-    return genres.firstWhere((e) => e.id == id);
-  }
-
-  return MovieBasicMapped(
-      genres: movieBasic.genreIds.map((id) => findGenre(id)).toList(),
-      id: movieBasic.id,
-      posterPath: movieBasic.posterPath,
-      title: movieBasic.title,
-      voteAverage: movieBasic.voteAverage);
-});

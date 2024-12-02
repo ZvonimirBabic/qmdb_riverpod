@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qmdb/models/dto/popular_movies_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../models/movies/genres/genre.dart';
+import '../dto/genres_dto/genres_dto.dart';
+import '../dto/popular_movies_dto/popular_movies_dto.dart';
 import 'dio_provider.dart';
 
 part 'api_client.g.dart';
@@ -26,5 +26,5 @@ abstract class ApiClient {
   );
 
   @GET('genre/movie/list')
-  Future<GenresResponse> getGenres();
+  Future<GenresDTO> getGenres();
 }

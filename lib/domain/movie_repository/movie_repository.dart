@@ -3,19 +3,20 @@ import 'dart:developer';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:q_architecture/q_architecture.dart';
+import 'package:qmdb/data/dto/genre_dto/genre_dto.dart';
+import 'package:qmdb/domain/mappers/genres_mapper.dart';
 import 'package:qmdb/services/genres_provider.dart';
 
-import '../models/movies/genres/genre.dart';
-import '../models/movies/movie_basic/movie_basic.dart';
-import 'api_client.dart';
+import '../../data/api/api_client.dart';
+import '../../data/dto/popular_movie_dto/popular_movie_dto.dart';
 
 final movieRepositoryProvider = Provider<MovieRepository>((ref) {
   return MovieRepositoryImpl(ref, ref.watch(apiClientProvider));
 });
 
 abstract interface class MovieRepository {
-  EitherFailureOr<List<MovieBasic>> getMovies(int page);
-  EitherFailureOr<List<Genre>> getGenres();
+  EitherFailureOr<List<PopularMovieDTO>> getMovies(int page);
+  EitherFailureOr<List<GenreDTO>?> getGenres();
 }
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -25,7 +26,7 @@ class MovieRepositoryImpl implements MovieRepository {
   final ApiClient apiClient;
 
   @override
-  EitherFailureOr<List<Genre>> getGenres() async {
+  EitherFailureOr<List<GenreDTO>?> getGenres() async {
     try {
       final response = await apiClient.getGenres();
       return Right(response.genres);
@@ -37,19 +38,28 @@ class MovieRepositoryImpl implements MovieRepository {
   }
 
   @override
-  EitherFailureOr<List<MovieBasic>> getMovies(int page) async {
+  EitherFailureOr<List<PopularMovieDTO>> getMovies(int page) async {
     if (true) {
-      log('get genres!');
-      await getGenres().fold((fail) {
-        log(fail.title);
-      }, (result) {
-        ref.read(genresStateProvider.notifier).state = result;
-        log('get genres! set');
-      });
+      await getGenres().fold(
+        (fail) {
+          log(fail.title);
+        },
+        (result) {
+          if (result != null) {
+            ref.read(genresStateProvider.notifier).state = result
+                .map(
+                  (a) => ref.read(
+                    genresDTOMapper(a),
+                  ),
+                )
+                .toList(growable: true);
+          }
+        },
+      );
     }
     try {
       final response = await apiClient.getPopular(1);
-      return Right(response.moviesBasicList);
+      return Right(response.results);
     } catch (e, st) {
       return Left(
         Failure(title: 'Failure getMovies', error: e, stackTrace: st),

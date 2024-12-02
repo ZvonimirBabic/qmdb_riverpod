@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
-import 'genres/genre.dart';
+import '../../../models/movies/genres/genre.dart';
 
-part 'movie_basic_mapped.g.dart';
+part 'movie.g.dart';
 
 @HiveType(typeId: 2)
 @JsonSerializable()
-class MovieBasicMapped {
+class Movie {
   @HiveField(0)
   @JsonKey(name: "genres")
   final List<Genre> genres;
@@ -24,7 +24,7 @@ class MovieBasicMapped {
   @JsonKey(name: "vote_average")
   final double voteAverage;
 
-  MovieBasicMapped({
+  Movie({
     required this.genres,
     required this.id,
     required this.posterPath,
@@ -32,7 +32,7 @@ class MovieBasicMapped {
     required this.voteAverage,
   });
 
-  MovieBasicMapped copyWith({
+  Movie copyWith({
     bool? adult,
     String? backdropPath,
     List<Genre>? genres,
@@ -48,7 +48,7 @@ class MovieBasicMapped {
     double? voteAverage,
     int? voteCount,
   }) =>
-      MovieBasicMapped(
+      Movie(
         genres: genres ?? this.genres,
         id: id ?? this.id,
         posterPath: posterPath ?? this.posterPath,
@@ -56,13 +56,12 @@ class MovieBasicMapped {
         voteAverage: voteAverage ?? this.voteAverage,
       );
 
-  factory MovieBasicMapped.fromJson(Map<String, dynamic> json) =>
-      _$MovieBasicMappedFromJson(json);
+  factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
 
   @override
   bool operator ==(Object other) {
-    return other is MovieBasicMapped && id == other.id && title == other.title;
+    return other is Movie && id == other.id && title == other.title;
   }
 
-  Map<String, dynamic> toJson() => _$MovieBasicMappedToJson(this);
+  Map<String, dynamic> toJson() => _$MovieToJson(this);
 }
